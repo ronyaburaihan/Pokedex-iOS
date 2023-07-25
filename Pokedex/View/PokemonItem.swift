@@ -6,19 +6,23 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PokemonItem: View {
+    
+    var pokemon: Pokemon
+    
     var body: some View {
         ZStack {
             VStack(alignment: .leading) {
-                 Text("Hello World")
+                Text(pokemon.name.capitalized)
                     .font(.headline)
                     .foregroundColor(.white)
                     .padding(.top,8)
                     .padding(.leading)
                 
                 HStack {
-                    Text("Poison")
+                    Text(pokemon.type.capitalized)
                         .font(.subheadline)
                         .foregroundColor(.white)
                         .padding(.horizontal,16)
@@ -26,7 +30,7 @@ struct PokemonItem: View {
                         .overlay(RoundedRectangle(cornerRadius: 20).fill(Color.white).opacity(0.25))
                         .frame(width: 100, height: 24)
                     
-                    Image("pokemon")
+                    KFImage(URL(string: pokemon.imageUrl))
                         .resizable()
                         .scaledToFit()
                         .frame(width: 68,height: 68)
@@ -34,14 +38,29 @@ struct PokemonItem: View {
                 }
             }
         }
-        .background(Color.green)
+        .background(Color(backgroundColor(forType: pokemon.type)))
         .cornerRadius(12)
-        .shadow(color: .green, radius: 6)
+        .shadow(color: Color(backgroundColor(forType: pokemon.type)), radius: 6)
+    }
+}
+
+func backgroundColor(forType type: String) -> UIColor {
+    switch type {
+    case "fire": return .systemRed
+    case "poison": return .systemGreen
+    case "water": return .systemTeal
+    case "electric": return .systemYellow
+    case "psychic": return .systemPurple
+    case "normal": return .systemOrange
+    case "ground": return .systemGray
+    case "flying": return .systemBlue
+    case "fairy": return .systemPink
+    default: return .systemIndigo
     }
 }
 
 struct PokemonItem_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonItem()
+        PokemonItem(pokemon: MOCK_POKEMON[2])
     }
 }

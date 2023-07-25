@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    private let gridItems = [GridItem(.adaptive(minimum:150))]
+    
     var body: some View {
-        VStack {
-            PokemonList()
-        }
+        PokemonList()
     }
 }
 

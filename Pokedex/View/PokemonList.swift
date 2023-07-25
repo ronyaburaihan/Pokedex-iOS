@@ -9,17 +9,20 @@ import SwiftUI
 
 struct PokemonList: View {
     
+    @ObservedObject var viewModel = PokemonViewModel()
+    
     private let gridItems = [GridItem(.adaptive(minimum:150))]
     
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVGrid(columns: gridItems) {
-                    ForEach(0..<150){ _ in
-                        PokemonItem()
+                    ForEach(viewModel.pokemon){ pokemon in
+                        PokemonItem(pokemon: pokemon)
                     }
                 }
             }
+            .navigationTitle("Pokedex")
         }
     }
 }
